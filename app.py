@@ -1,14 +1,14 @@
 from flask import Flask
 from markupsafe import escape
-import os
+from decouple import config
 
 
 #get env vars
-sqlPass = os.getenv('SQLPASS')
-app = Flask(__name__)
+#sqlPass = config('SQLPASS')
+#app = Flask(__name__)
 #config MySQL DB
 #username and password for database followed by url where it is hosted w/ name
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://root:{sqlPass}@localhost/stockdata'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:{sqlPass}@localhost/stockdata'
 
 @app.route("/")
 def index():
