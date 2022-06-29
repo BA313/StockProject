@@ -1,11 +1,15 @@
 import mysql.connector
-import os
+from decouple import config
 
-sqlPass = os.getenv('SQLPASS')
+#get password from .env file
+sqlPass = config('SQLPASS')
 from mysql.connector import errorcode
 
 try:
-  mydb = mysql.connector.connect()
+  mydb = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password=str(sqlPass))
   my_cursor = mydb.cursor()
 
   # my_cursor.execute("CREATE DATABASE stockdata")
