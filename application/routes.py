@@ -14,9 +14,9 @@ def index():
     user = {'username': 'Default'}
     return render_template('index.html', title='Home', user=user)
 
-@app.route("/hello")
-def hello():
-    return "<p>Hello World</p>"
+@app.route("/about")
+def about():
+    return render_template('about.html', title='About')
 
 @app.route('/post/<int:post_id>')
 def show_post(post_id):
