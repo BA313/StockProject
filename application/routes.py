@@ -19,7 +19,7 @@ def about():
     return render_template('about.html', title='About')
 
 @app.route("/lookup")
-def about():
+def lookup():
     return render_template('lookup.html', title='Look Up')
 
 @app.route('/post/<int:post_id>')
