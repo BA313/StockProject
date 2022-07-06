@@ -1,7 +1,7 @@
 from markupsafe import escape
-from decouple import config
 from . import app
 from flask import render_template
+from .model import importTickers as TIC
 
 #get env vars
 #sqlPass = config('SQLPASS')
@@ -18,9 +18,11 @@ def index():
 def about():
     return render_template('about.html', title='About')
 
-@app.route("/lookup")
+@app.route("/lookup", methods=['GET', 'POST'])
 def lookup():
-    return render_template('lookup.html', title='Look Up')
+    tics = TIC.getTickers()
+    #tickers need to be a list of dictionaries
+    return render_template('lookup.html', title='Look Up', tickers=tics)
 
 @app.route('/post/<int:post_id>')
 def show_post(post_id):
