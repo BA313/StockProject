@@ -1,7 +1,8 @@
 from markupsafe import escape
 from . import app
 from flask import render_template
-from .model import importTickers as TIC
+
+from .view.forms import LookUpForm
 
 #get env vars
 #sqlPass = config('SQLPASS')
@@ -20,9 +21,10 @@ def about():
 
 @app.route("/lookup", methods=['GET', 'POST'])
 def lookup():
-    tics = TIC.getTickers()
+    form = LookUpForm()
+
     #tickers need to be a list of dictionaries
-    return render_template('lookup.html', title='Look Up', tickers=tics)
+    return render_template('lookup.html', title='Look Up', form=form)
 
 @app.route('/post/<int:post_id>')
 def show_post(post_id):

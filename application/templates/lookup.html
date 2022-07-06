@@ -3,7 +3,9 @@
     {{title}}
 {% endblock %}
 {% block content %}
-    <form>
+     <!-- method will post to the same route it is currently on -->
+    <form method="post" action="">
+            {{ form.hidden_tag() }}
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <h4>Ticker</h4>
@@ -13,23 +15,18 @@
                     Use TextBox
                   </label>
                 </div>
-                <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="ex. SPY">
+                {{ form.ticField(class="form-control mb-2",id="inlineFormInput", placeholder="ex. SPY") }}
                  <div class="form-check">
                       <input class="form-check-input" type="radio" name="radio" id="radios2" value="option2" onchange="changeDisabled2()">
                       <label class="form-check-label" for="radios2">
                         Use Dropdown
                       </label>
                 </div>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" disabled>
-                        <option selected>Choose...</option>
-                        {% for tic in tickers %}
-                            <option value="1">{{tic}}</option>
-                        {% endfor %}
-                </select>
+                {{ form.ticField2(class="custom-select mr-sm-2",id="inlineFormCustomSelect") }}
                 <small id="tickerHelpBlock" class="form-text text-muted">
                 ticker must exist on the public market
                 </small>
-                <button type="submit" class="btn btn-primary mb-2" onclick="post">Submit</button>
+                {{ form.submitButton(class="btn btn-primary mb-2") }}
             </div>
         </div>
          <!-- JavaScript functions for enabling and disabling options -->
