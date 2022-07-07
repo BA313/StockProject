@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{title}}
+{% endblock %}
+{% block content %}
+    {% if form.is_submitted() and form.errors|count > 0 %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ form.errors|count }} error(s):
+        <ul>
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+     <!-- method will post to the same route it is currently on -->
+    <form method="post" action="">
+            {{ form.hidden_tag() }}
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <h4>Ticker</h4>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="radio" id="radios1" value="1" onchange="changeDisabled()" checked>
+                  <label class="form-check-label" for="radios1">
+                    Use TextBox
+                  </label>
+                </div>
+                {{ form.ticField(class="form-control mb-2",id="inlineFormInput", placeholder="ex. SPY") }}
+                 <div class="form-check">
+                      <input class="form-check-input" type="radio" name="radio" id="radios2" value="2" onchange="changeDisabled2()">
+                      <label class="form-check-label" for="radios2">
+                        Use Dropdown
+                      </label>
+                </div>
+                {{ form.ticField2(class="custom-select mr-sm-2",id="inlineFormCustomSelect") }}
+                <small id="tickerHelpBlock" class="form-text text-muted">
+                ticker must exist on the public market
+                </small>
+                {{ form.submitButton(class="btn btn-primary mb-2") }}
+            </div>
+        </div>
+         <!-- JavaScript functions for enabling and disabling options -->
+        <script>
+        function changeDisabled() {
+          document.getElementById("inlineFormInput").disabled = false;
+          document.getElementById("inlineFormCustomSelect").disabled = true;
+        }
+        function changeDisabled2() {
+          document.getElementById("inlineFormInput").disabled = true;
+          document.getElementById("inlineFormCustomSelect").disabled = false;
+        }
+        </script>
+    </form>
+{% endblock %}
