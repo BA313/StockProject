@@ -1,7 +1,6 @@
 from markupsafe import escape
 from . import app
-from flask import render_template
-
+from flask import render_template, flash, request, redirect, url_for
 from .view.forms import LookUpForm
 
 #get env vars
@@ -22,7 +21,15 @@ def about():
 @app.route("/lookup", methods=['GET', 'POST'])
 def lookup():
     form = LookUpForm()
-
+    if form.is_submitted():
+        print(form.validate())
+        if(len(form.errors) < 2):
+            form.errors.clear()
+            if int(request.form.getlist('radio')[0]) == 1:
+                flash(f'The Submitted ticker was {form.ticField.data}', 'Success')
+            elif int(request.form.getlist('radio')[0]) == 2:
+                flash(f'The Submitted ticker was {form.ticField2.data}', 'Success')
+            return redirect(url_for('about'))
     #tickers need to be a list of dictionaries
     return render_template('lookup.html', title='Look Up', form=form)
 

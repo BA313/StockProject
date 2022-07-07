@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import SearchField, SubmitField, SelectField, RadioField
-from wtforms.validators import Length, DataRequired
+from wtforms import StringField, SubmitField, SelectField, RadioField
+from wtforms.validators import Length, DataRequired, Optional
 from ..model import importTickers as TIC
 
 class LookUpForm(FlaskForm):
     #attributes of the form
     #validators constrain the inputs
-    ticField = SearchField(
+    ticField = StringField(
         'TickerField',
         validators=[Length(min=1, max=8)],
 
@@ -15,8 +15,6 @@ class LookUpForm(FlaskForm):
     ticField2 = SelectField(
         'TickerField2',
         choices=tics,
-        render_kw={'disabled':''},
-        validators=[DataRequired()]
+        render_kw={'disabled':''}
     )
-    choiceField = RadioField('optionField')
     submitButton = SubmitField('Submit')
